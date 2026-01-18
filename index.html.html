@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pilli Keshav Rao | Portfolio</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { font-family: 'DM Sans', sans-serif; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: radial-gradient(circle at top, #0f172a, #020617);
+      color: #e5e7eb;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes floatSlow {
+      0%,100% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-40px) translateX(30px); }
+    }
+
+    .animate-fade-in-up {
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+    }
+
+    .floating { animation: floatSlow 18s ease-in-out infinite; }
+    .floating-delay { animation: floatSlow 22s ease-in-out infinite; }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .glass {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all .8s ease;
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body class="overflow-x-hidden">
+
+<!-- ========== NAVBAR ========== -->
+<nav class="fixed top-0 w-full z-50 glass">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <span class="font-bold text-xl gradient-text">Portfolio</span>
+    <div class="hidden md:flex gap-8 text-sm text-gray-300">
+      <a href="#home">Home</a>
+      <a href="#about"> About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#internship">Internship</a>
+      <a href="#certificates">Certificates</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ========== HOME ========== -->
+<section id="home" class="min-h-screen flex items-center justify-center pt-32 px-6 relative overflow-hidden">
+  <div class="absolute -top-40 -left-40 w-[500px] h-[500px] bg-violet-600/20 blur-3xl rounded-full floating"></div>
+  <div class="absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-indigo-600/20 blur-3xl rounded-full floating-delay"></div>
+
+  <div class="text-center max-w-4xl mx-auto">
+    <h1 class="text-5xl md:text-7xl font-extrabold mb-8 animate-fade-in-up">
+      <span class="gradient-text">Pilli Keshav Rao</span>
+    </h1>
+
+    <div class="flex flex-wrap justify-center gap-3 mb-12">
+      <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full">Business Analyst</span>
+      <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full">Data Analytics</span>
+      <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full">Power BI</span>
+      <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full">Full Stack Python</span>
+      <span class="px-4 py-2 bg-violet-600/30 border border-violet-500/40 rounded-full text-violet-300"> GenAI</span>
+      <span class="px-4 py-2 bg-indigo-600/30 border border-indigo-500/40 rounded-full text-indigo-300"> Prompt Engineering</span>
+     
+    </div>
+
+    <div class="flex justify-center gap-6">
+      <a href="#projects" class="bg-violet-600 px-10 py-4 rounded-full font-semibold hover:scale-105 transition">
+        View Projects
+      </a>
+      <a href="#contact" class="border px-10 py-4 rounded-full hover:border-violet-500 transition">
+        Contact Me
+      </a>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ========== ABOUT ========== -->
+<section id="about" class="py-28 px-6">
+  <div class="max-w-5xl mx-auto reveal">
+    <h2 class="text-4xl font-bold mb-6 gradient-text">About Me</h2>
+
+    <p class="text-gray-400 leading-relaxed mb-4">
+      I am a final-year Computer Science Engineering student specializing in Artificial
+      Intelligence and Machine Learning, with a strong interest in Business Analytics
+      and data-driven decision making. I enjoy working with data to identify patterns,
+      uncover insights, and support meaningful business outcomes.
+    </p>
+
+    <p class="text-gray-400 leading-relaxed mb-4">
+      My technical skill set includes Python, SQL, Power BI, Excel, and machine learning
+      fundamentals, which I have applied through academic and real-world projects such
+      as customer churn analysis, sales analytics dashboards, and predictive modeling
+      applications. These experiences have strengthened my ability to analyze data,
+      communicate insights, and solve practical problems.
+    </p>
+
+    <p class="text-gray-400 leading-relaxed">
+      My objective is to begin my career as a Business Analyst or Data Analyst, where I
+      can contribute to data-driven strategies, collaborate with cross-functional teams,
+      and continuously enhance my analytical, technical, and professional skills while
+      adding value to the organization.
+    </p>
+
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ========== SKILLS ========== -->
+<section id="skills" class="py-28 px-6 bg-black/30">
+  <div class="max-w-6xl mx-auto">
+
+    <h2 class="text-4xl font-bold text-center mb-16 reveal">
+      Skills & <span class="gradient-text">Expertise</span>
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-8">
+
+      <!-- Programming -->
+      <div class="glass p-8 rounded-2xl reveal">
+        <h3 class="text-xl font-semibold mb-4 text-violet-400">
+          💻 Programming
+        </h3>
+        <ul class="text-gray-400 space-y-2">
+          <li>Python</li>
+          <li>Object-Oriented Programming (OOP)</li>
+        </ul>
+      </div>
+
+      <!-- Data Analytics -->
+      <div class="glass p-8 rounded-2xl reveal">
+        <h3 class="text-xl font-semibold mb-4 text-violet-400">
+          📊 Data Analytics
+        </h3>
+        <ul class="text-gray-400 space-y-2">
+          <li>SQL</li>
+          <li>Data Cleaning</li>
+          <li>Exploratory Data Analysis (EDA)</li>
+        </ul>
+      </div>
+
+      <!-- Visualization -->
+      <div class="glass p-8 rounded-2xl reveal">
+        <h3 class="text-xl font-semibold mb-4 text-violet-400">
+          📈 Visualization & Reporting
+        </h3>
+        <ul class="text-gray-400 space-y-2">
+          <li>Power BI</li>
+          <li>Tableau</li>
+          <li>MS Excel</li>
+        </ul>
+      </div>
+
+      <!-- Databases -->
+      <div class="glass p-8 rounded-2xl reveal">
+        <h3 class="text-xl font-semibold mb-4 text-violet-400">
+          🗄 Database Management
+        </h3>
+        <ul class="text-gray-400 space-y-2">
+          <li>DBMS</li>
+          <li>Data Normalization</li>
+        </ul>
+      </div>
+
+      <!-- Tools -->
+      <div class="glass p-8 rounded-2xl reveal">
+        <h3 class="text-xl font-semibold mb-4 text-violet-400">
+          🛠 Tools & Version Control
+        </h3>
+        <ul class="text-gray-400 space-y-2">
+          <li>Git</li>
+          <li>GitHub</li>
+          <li>VS Code</li>
+        </ul>
+      </div>
+
+      <!-- AI & ML -->
+      <div class="glass p-8 rounded-2xl reveal">
+        <h3 class="text-xl font-semibold mb-4 text-violet-400">
+          🤖 AI & ML (Foundational)
+        </h3>
+        <ul class="text-gray-400 space-y-2">
+          <li>Machine Learning Concepts</li>
+          <li>Model Evaluation Basics</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ========== PROJECTS ========== -->
+<section id="projects" class="py-28 px-6">
+  <div class="max-w-6xl mx-auto">
+
+    <h2 class="text-4xl font-bold text-center mb-16 reveal">
+      Featured <span class="gradient-text">Projects</span>
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-8">
+
+      <!-- Project 1 -->
+      <div class="glass p-8 rounded-2xl reveal card-hover">
+        <h3 class="text-2xl font-semibold mb-3">
+          Customer & Sales Analysis Dashboard
+        </h3>
+        <p class="text-gray-400 mb-4">
+          Developed an interactive Power BI dashboard to analyze sales performance,
+          customer behavior, and revenue trends. The project focuses on identifying
+          key business KPIs and providing data-driven insights for decision making.
+        </p>
+        <p class="text-sm text-violet-400 mb-4">
+          Power BI · Data Analysis · Business Intelligence
+        </p>
+        <a href="https://github.com/keshavraopilli749/Sales_report_using_PowerBi-main"
+           target="_blank"
+           class="inline-block text-violet-400 hover:underline">
+          🔗 View on GitHub
+        </a>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="glass p-8 rounded-2xl reveal card-hover">
+        <h3 class="text-2xl font-semibold mb-3">
+          Pizza Sales Analysis (SQL & Power BI)
+        </h3>
+        <p class="text-gray-400 mb-4">
+          Analyzed pizza sales data using SQL to extract meaningful insights related
+          to revenue, order trends, and best-selling items. Built Power BI dashboards
+          to visualize KPIs and support business performance evaluation.
+        </p>
+        <p class="text-sm text-violet-400 mb-4">
+          SQL Server · Power BI · Data Visualization
+        </p>
+        <a href="https://github.com/keshavraopilli749/Pizza-Sales-Project-SQL-PowerBI-main"
+           target="_blank"
+           class="inline-block text-violet-400 hover:underline">
+          🔗 View on GitHub
+        </a>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="glass p-8 rounded-2xl reveal card-hover">
+        <h3 class="text-2xl font-semibold mb-3">
+          Voice-Enabled NLP Medical Record System
+        </h3>
+        <p class="text-gray-400 mb-4">
+          Built an NLP-based healthcare text mining system capable of processing
+          medical records using voice and text input. Implemented entity extraction
+          and text analysis techniques to support efficient medical data interpretation.
+        </p>
+        <p class="text-sm text-violet-400 mb-4">
+          Python · NLP · spaCy · NLTK · BERT
+        </p>
+        <a href="https://github.com/keshavraopilli749/Voice-NLP-based-Healthcare-Text-Mining-for-Medical-RECOREDS-"
+           target="_blank"
+           class="inline-block text-violet-400 hover:underline">
+          🔗 View on GitHub
+        </a>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="glass p-8 rounded-2xl reveal card-hover">
+        <h3 class="text-2xl font-semibold mb-3">
+          Multiple Disease Prediction Web Application
+        </h3>
+        <p class="text-gray-400 mb-4">
+          Developed a machine learning-based web application to predict multiple
+          diseases using user input parameters. The application demonstrates
+          end-to-end ML deployment using an interactive user interface.
+        </p>
+        <p class="text-sm text-violet-400 mb-4">
+          Python · Machine Learning · Streamlit
+        </p>
+        <a href="https://github.com/keshavraopilli749/Multiple-Disease-Prediction-Webapp"
+           target="_blank"
+           class="inline-block text-violet-400 hover:underline">
+          🔗 View on GitHub
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ========== INTERNSHIP ========== -->
+<section id="internship" class="py-28 px-6 bg-black/30">
+  <div class="max-w-5xl mx-auto reveal">
+
+    <h2 class="text-4xl font-bold mb-10">
+      Internship <span class="gradient-text">Experience</span>
+    </h2>
+
+    <div class="glass p-8 rounded-2xl card-hover">
+
+      <h3 class="text-2xl font-semibold mb-1">
+        Data Analyst Intern
+      </h3>
+
+      <p class="text-sm text-violet-400 mb-4">
+        Oasis Infobyte · Remote · 2024 
+      </p>
+
+      <p class="text-gray-400 mb-4">
+        Worked as a Data Analyst Intern focusing on data cleaning, exploratory data
+        analysis, and visualization to support business-oriented insights. Collaborated
+        with datasets to identify trends, patterns, and key performance indicators.
+      </p>
+
+      <ul class="text-gray-400 list-disc list-inside space-y-2 mb-4">
+        <li>Performed data cleaning and preprocessing using Python and SQL</li>
+        <li>Conducted Exploratory Data Analysis (EDA) to identify patterns and anomalies</li>
+        <li>Designed interactive dashboards and reports using Power BI</li>
+        <li>Extracted actionable business insights to support data-driven decisions</li>
+      </ul>
+
+      <p class="text-sm text-violet-400">
+        Python · SQL · Power BI · Data Analysis · EDA
+      </p>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ========== CERTIFICATES ========== -->
+<section id="certificates" class="py-28 px-6">
+  <div class="max-w-6xl mx-auto">
+
+    <h2 class="text-4xl font-bold text-center mb-16 reveal">
+      Certificates & <span class="gradient-text">Achievements</span>
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-8">
+
+      <div class="glass p-6 rounded-2xl card-hover reveal">
+        <h3 class="text-lg font-semibold mb-2">
+          Machine Learning with Python
+        </h3>
+        <p class="text-sm text-gray-400">
+          IBM · 2024
+        </p>
+      </div>
+
+      <div class="glass p-6 rounded-2xl card-hover reveal">
+        <h3 class="text-lg font-semibold mb-2">
+          A Crash Course in Data Science
+        </h3>
+        <p class="text-sm text-gray-400">
+          Coursera · 2024
+        </p>
+      </div>
+
+      <div class="glass p-6 rounded-2xl card-hover reveal">
+        <h3 class="text-lg font-semibold mb-2">
+          AI with Data Science
+        </h3>
+        <p class="text-sm text-gray-400">
+          Coursera · 2025
+        </p>
+      </div>
+
+      <div class="glass p-6 rounded-2xl card-hover reveal">
+        <h3 class="text-lg font-semibold mb-2">
+          Generative AI with Copilot
+        </h3>
+        <p class="text-sm text-gray-400">
+          Coursera · 2025
+        </p>
+      </div>
+
+      <div class="glass p-6 rounded-2xl card-hover reveal">
+        <h3 class="text-lg font-semibold mb-2">
+          Prompt Engineering with GPT
+        </h3>
+        <p class="text-sm text-gray-400">
+          Coursera · 2025
+        </p>
+      </div>
+
+      <div class="glass p-6 rounded-2xl card-hover reveal">
+        <h3 class="text-lg font-semibold mb-2">
+          Excel Automation using ChatGPT
+        </h3>
+        <p class="text-sm text-gray-400">
+          Data Analytics · 2024
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ========== EDUCATION ========== -->
+<section id="education" class="py-28 px-6 bg-black/30">
+  <div class="max-w-5xl mx-auto reveal">
+
+    <h2 class="text-4xl font-bold mb-10">
+      Education & <span class="gradient-text">Qualifications</span>
+    </h2>
+
+    <div class="space-y-8">
+
+      <!-- B.Tech -->
+      <div class="glass p-8 rounded-2xl card-hover">
+        <h3 class="text-xl font-semibold mb-1">
+          B.Tech – Computer Science & Engineering (AI & ML)
+        </h3>
+        <p class="text-gray-400">
+          Vignan Institute of Technology and Science, Hyderabad | 2026 Passout        </p>
+        <p class="text-sm text-violet-400 mt-1">
+          2022 – 2026 · CGPA: 7.28 / 10.00 (Till 6th Semester)
+        </p>
+      </div>
+
+      <!-- Intermediate -->
+      <div class="glass p-8 rounded-2xl card-hover">
+        <h3 class="text-xl font-semibold mb-1">
+          Pre-University Education (Intermediate)
+        </h3>
+        <p class="text-gray-400">
+          Akshara Junior College
+        </p>
+        <p class="text-sm text-violet-400 mt-1">
+          2020 – 2022 · Percentage: 86.9%
+        </p>
+      </div>
+
+      <!-- SSC -->
+      <div class="glass p-8 rounded-2xl card-hover">
+        <h3 class="text-xl font-semibold mb-1">
+          Secondary Education (SSC)
+        </h3>
+        <p class="text-gray-400">
+          Purnodaya High School
+        </p>
+        <p class="text-sm text-violet-400 mt-1">
+          2020 · CGPA: 10.00 / 10.00
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ========== CONTACT ========== -->
+<section id="contact" class="py-28 px-6">
+  <div class="max-w-4xl mx-auto text-center reveal">
+
+    <h2 class="text-4xl font-bold mb-4">
+      Let’s <span class="gradient-text">Connect</span>
+    </h2>
+
+    <p class="text-gray-400 mb-10">
+      Open to internship and entry-level opportunities in Business Analytics,
+      Data Analytics, and related roles.
+    </p>
+
+    <div class="flex flex-col md:flex-row gap-6 justify-center">
+
+      <!-- Email -->
+      <a href="mailto:keshavraoplacement@gmail.com"
+         class="bg-violet-600 hover:bg-violet-700 text-white
+                px-8 py-3 rounded-full font-medium
+                transition hover:scale-105">
+        📧 Email
+      </a>
+
+      <!-- Mobile -->
+      <a href="tel:+919391596522"
+         class="border border-gray-500 hover:border-violet-500
+                px-8 py-3 rounded-full font-medium
+                transition hover:scale-105">
+        📞 +91 93915 96522
+      </a>
+
+      <!-- LinkedIn -->
+      <a href="https://www.linkedin.com/in/keshav-rao-pilli-a18101337"
+         target="_blank"
+         class="border border-gray-500 hover:border-violet-500
+                px-8 py-3 rounded-full font-medium
+                transition hover:scale-105">
+        💼 LinkedIn
+      </a>
+
+      <!-- GitHub -->
+      <a href="https://github.com/keshavraopilli749"
+         target="_blank"
+         class="border border-gray-500 hover:border-violet-500
+                px-8 py-3 rounded-full font-medium
+                transition hover:scale-105">
+        🧑‍💻 GitHub
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+<footer class="py-6 text-center text-gray-500 border-t border-white/10">
+  © 2026 Pilli Keshav Rao
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const revealOnScroll = () => {
+    reveals.forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.85) {
+        el.classList.add('active');
+      }
+    });
+  };
+  window.addEventListener('scroll', revealOnScroll);
+  revealOnScroll();
+</script>
+
+</body>
+</html>
