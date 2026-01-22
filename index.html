@@ -23,7 +23,7 @@
       overflow-x: hidden;
     }
 
-    /* ================= TEXT & UI ================= */
+    /* ================= UI ================= */
     .gradient-text {
       background: linear-gradient(135deg, #8b5cf6, #6366f1);
       -webkit-background-clip: text;
@@ -36,24 +36,7 @@
       border: 1px solid rgba(255,255,255,0.08);
     }
 
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all .8s ease;
-    }
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ================= BASIC ANIMATIONS ================= */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ================= 3D FLOATING BACKGROUND ================= */
-
+    /* ================= 3D BACKGROUND ================= */
     .bg-3d {
       position: fixed;
       inset: 0;
@@ -69,29 +52,12 @@
       border-radius: 50%;
       filter: blur(60px);
       opacity: 0.35;
-      animation: float3D 26s ease-in-out infinite;
-      transform-style: preserve-3d;
+      animation: float3D 28s ease-in-out infinite;
     }
 
-    .orb-purple {
-      background: radial-gradient(circle, #8b5cf6, transparent 70%);
-      top: 10%;
-      left: 5%;
-    }
-
-    .orb-indigo {
-      background: radial-gradient(circle, #6366f1, transparent 70%);
-      bottom: 15%;
-      right: 10%;
-      animation-duration: 30s;
-    }
-
-    .orb-blue {
-      background: radial-gradient(circle, #38bdf8, transparent 70%);
-      top: 55%;
-      left: 60%;
-      animation-duration: 34s;
-    }
+    .orb-purple { background: radial-gradient(circle, #8b5cf6, transparent 70%); top: 10%; left: 5%; }
+    .orb-indigo { background: radial-gradient(circle, #6366f1, transparent 70%); bottom: 15%; right: 10%; animation-duration: 34s; }
+    .orb-blue   { background: radial-gradient(circle, #38bdf8, transparent 70%); top: 55%; left: 60%; animation-duration: 38s; }
 
     .float-ring {
       position: absolute;
@@ -102,30 +68,132 @@
       top: 35%;
       left: 25%;
       animation: rotate3D 42s linear infinite;
-      backdrop-filter: blur(2px);
     }
 
+    /* Side-to-side AI Waves */
+    .ai-wave {
+      position: absolute;
+      width: 140%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(99,102,241,0.3), transparent);
+      animation: driftX 40s linear infinite;
+      opacity: 0.4;
+    }
+    .wave-1 { top: 30%; }
+    .wave-2 { top: 65%; animation-duration: 48s; }
+
+    /* Particles */
+    .tech-particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(139,92,246,0.6);
+      filter: blur(1px);
+      animation: floatSide 30s ease-in-out infinite;
+    }
+    .p1 { top: 20%; left: 15%; }
+    .p2 { top: 50%; left: 75%; animation-duration: 36s; }
+    .p3 { top: 75%; left: 40%; animation-duration: 42s; }
+
+    /* Shapes */
+    .shape {
+      position: absolute;
+      opacity: 0.25;
+      animation: floatSide 34s ease-in-out infinite;
+    }
+
+    .cube {
+      width: 60px;
+      height: 60px;
+      border: 1px solid rgba(99,102,241,0.5);
+    }
+    .c1 { top: 18%; left: 20%; }
+    .c2 { bottom: 22%; right: 18%; animation-duration: 40s; }
+
+    .hex {
+      width: 70px;
+      height: 40px;
+      border: 1px solid rgba(139,92,246,0.5);
+      clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    }
+    .h1 { top: 45%; left: 65%; }
+    .h2 { top: 70%; left: 30%; animation-duration: 46s; }
+
+    /* Network Lines */
+    .network-lines {
+      position: absolute;
+      inset: 0;
+      opacity: 0.25;
+    }
+    .network-lines line {
+      stroke: rgba(99,102,241,0.6);
+      stroke-width: 1;
+      stroke-dasharray: 6 6;
+      animation: dashFlow 20s linear infinite;
+    }
+
+    /* Animations */
     @keyframes float3D {
-      0%   { transform: translateY(0) translateX(0) translateZ(0); }
-      50%  { transform: translateY(-80px) translateX(60px) translateZ(40px); }
-      100% { transform: translateY(0) translateX(0) translateZ(0); }
+      0% { transform: translate(0,0); }
+      50% { transform: translate(80px,-60px); }
+      100% { transform: translate(0,0); }
+    }
+    @keyframes rotate3D {
+      from { transform: rotateX(0) rotateY(0); }
+      to { transform: rotateX(360deg) rotateY(360deg); }
+    }
+    @keyframes driftX {
+      from { transform: translateX(-20%); }
+      to { transform: translateX(20%); }
+    }
+    @keyframes floatSide {
+      0% { transform: translate(0,0); }
+      50% { transform: translate(120px,-40px); }
+      100% { transform: translate(0,0); }
+    }
+    @keyframes dashFlow {
+      from { stroke-dashoffset: 0; }
+      to { stroke-dashoffset: -120; }
     }
 
-    @keyframes rotate3D {
-      from { transform: rotateX(0deg) rotateY(0deg); }
-      to   { transform: rotateX(360deg) rotateY(360deg); }
+    /* Mobile optimization */
+    @media (max-width: 768px) {
+      .float-orb, .float-ring, .shape, .ai-wave, .tech-particle, .network-lines {
+        animation: none !important;
+        opacity: 0.15;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<!-- ========== 3D FLOATING BACKGROUND ========== -->
+<!-- ========== BACKGROUND EFFECTS ========== -->
 <div class="bg-3d">
   <div class="float-orb orb-purple"></div>
   <div class="float-orb orb-indigo"></div>
   <div class="float-orb orb-blue"></div>
   <div class="float-ring"></div>
+
+  <div class="ai-wave wave-1"></div>
+  <div class="ai-wave wave-2"></div>
+
+  <div class="tech-particle p1"></div>
+  <div class="tech-particle p2"></div>
+  <div class="tech-particle p3"></div>
+
+  <div class="shape cube c1"></div>
+  <div class="shape cube c2"></div>
+  <div class="shape hex h1"></div>
+  <div class="shape hex h2"></div>
+
+  <svg class="network-lines" viewBox="0 0 1000 600" preserveAspectRatio="none">
+    <line x1="100" y1="120" x2="400" y2="260"/>
+    <line x1="400" y1="260" x2="700" y2="180"/>
+    <line x1="700" y1="180" x2="900" y2="340"/>
+    <line x1="250" y1="420" x2="600" y2="360"/>
+  </svg>
 </div>
 
 <!-- ========== NAVBAR ========== -->
@@ -145,10 +213,38 @@
   </div>
 </nav>
 
-<!-- Your sections continue here -->
+<!-- CONTENT SECTIONS CONTINUE HERE -->
+
+<!-- ========== MOUSE PARALLAX ========== -->
+<script>
+  const parallaxItems = document.querySelectorAll(
+    '.float-orb, .float-ring, .shape, .ai-wave'
+  );
+
+  document.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 30;
+    const y = (e.clientY / window.innerHeight - 0.5) * 30;
+
+    parallaxItems.forEach((el, i) => {
+      const depth = (i + 1) * 0.12;
+      el.style.transform = `translate(${x * depth}px, ${y * depth}px)`;
+    });
+  });
+</script>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -843,6 +939,7 @@
 
 </body>
 </html>
+
 
 
 
