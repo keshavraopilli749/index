@@ -219,9 +219,81 @@
       transform: scale(1.05);
     }
 
+    /* Project Image Hover */
+    .project-card:hover img {
+      transform: scale(1.05);
+    }
+
     .project-card .img-wrapper {
       overflow: hidden;
       border-radius: 12px;
+    }
+
+    /* Skills Bento Grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .skill-card {
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(139, 92, 246, 0.5);
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .skill-tag {
+      padding: 8px 16px;
+      border-radius: 9999px;
+      /* full rounded */
+      font-size: 0.875rem;
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .skill-tag:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: scale(1.05);
+      border-color: currentColor;
+    }
+
+    /* Specific Colors for Categories */
+    .tag-blue {
+      color: #60a5fa;
+    }
+
+    .tag-green {
+      color: #4ade80;
+    }
+
+    .tag-purple {
+      color: #c084fc;
+    }
+
+    .tag-orange {
+      color: #fb923c;
+    }
+
+    .tag-pink {
+      color: #f472b6;
+    }
+
+    .tag-cyan {
+      color: #22d3ee;
     }
   </style>
 </head>
@@ -362,86 +434,80 @@
         Skills & <span class="gradient-text">Expertise</span>
       </h2>
 
-      <div class="grid md:grid-cols-3 gap-8">
+      <div class="skills-grid">
 
-        <!-- Programming -->
-        <div class="glass p-8 rounded-2xl reveal glow-card">
-          <div class="glow-content">
-            <h3 class="text-xl font-semibold mb-4 text-violet-400 flex items-center gap-2">
-              <i class="ri-code-s-slash-line text-2xl"></i> Programming
-            </h3>
-            <ul class="text-gray-400 space-y-2">
-              <li>Python</li>
-              <li>Object-Oriented Programming (OOP)</li>
-            </ul>
+        <!-- Programming (Blue) -->
+        <div class="glass p-8 rounded-2xl reveal skill-card">
+          <h3 class="text-xl font-semibold mb-6 text-blue-400 flex items-center gap-2">
+            <i class="ri-code-s-slash-line text-2xl"></i> Programming
+          </h3>
+          <div class="skill-tags">
+            <div class="skill-tag tag-blue"><i class="ri-terminal-box-line"></i> Python</div>
+            <div class="skill-tag tag-blue"><i class="ri-braces-line"></i> OOP Concept</div>
+            <div class="skill-tag tag-blue"><i class="ri-html5-fill"></i> HTML5 & CSS3</div>
+            <div class="skill-tag tag-blue"><i class="ri-javascript-fill"></i> JavaScript Basics</div>
           </div>
         </div>
 
-        <!-- Data Analytics -->
-        <div class="glass p-8 rounded-2xl reveal glow-card">
-          <div class="glow-content">
-            <h3 class="text-xl font-semibold mb-4 text-violet-400 flex items-center gap-2">
-              <i class="ri-bar-chart-grouped-line text-2xl"></i> Data Analytics
-            </h3>
-            <ul class="text-gray-400 space-y-2">
-              <li>SQL</li>
-              <li>Data Cleaning</li>
-              <li>Exploratory Data Analysis (EDA)</li>
-            </ul>
+        <!-- Data Analytics (Green) -->
+        <div class="glass p-8 rounded-2xl reveal skill-card">
+          <h3 class="text-xl font-semibold mb-6 text-green-400 flex items-center gap-2">
+            <i class="ri-bar-chart-grouped-line text-2xl"></i> Data Analytics
+          </h3>
+          <div class="skill-tags">
+            <div class="skill-tag tag-green"><i class="ri-database-2-line"></i> SQL</div>
+            <div class="skill-tag tag-green"><i class="ri-filter-3-line"></i> Data Cleaning</div>
+            <div class="skill-tag tag-green"><i class="ri-search-eye-line"></i> EDA</div>
+            <div class="skill-tag tag-green"><i class="ri-file-excel-2-line"></i> Excel (Adv)</div>
           </div>
         </div>
 
-        <!-- Visualization -->
-        <div class="glass p-8 rounded-2xl reveal glow-card">
-          <div class="glow-content">
-            <h3 class="text-xl font-semibold mb-4 text-violet-400 flex items-center gap-2">
-              <i class="ri-pie-chart-2-line text-2xl"></i> Visualization & Reporting
-            </h3>
-            <ul class="text-gray-400 space-y-2">
-              <li>Power BI</li>
-              <li>Tableau</li>
-              <li>MS Excel</li>
-            </ul>
+        <!-- Visualization (Purple) -->
+        <div class="glass p-8 rounded-2xl reveal skill-card">
+          <h3 class="text-xl font-semibold mb-6 text-purple-400 flex items-center gap-2">
+            <i class="ri-pie-chart-2-line text-2xl"></i> Visualization
+          </h3>
+          <div class="skill-tags">
+            <div class="skill-tag tag-purple"><i class="ri-bar-chart-box-line"></i> Power BI</div>
+            <div class="skill-tag tag-purple"><i class="ri-table-line"></i> Tableau Public</div>
+            <div class="skill-tag tag-purple"><i class="ri-dashboard-line"></i> Dashboards</div>
           </div>
         </div>
 
-        <!-- Databases -->
-        <div class="glass p-8 rounded-2xl reveal glow-card">
-          <div class="glow-content">
-            <h3 class="text-xl font-semibold mb-4 text-violet-400 flex items-center gap-2">
-              <i class="ri-database-2-line text-2xl"></i> Database Management
-            </h3>
-            <ul class="text-gray-400 space-y-2">
-              <li>DBMS</li>
-              <li>Data Normalization</li>
-            </ul>
+        <!-- Databases (Orange) -->
+        <div class="glass p-8 rounded-2xl reveal skill-card">
+          <h3 class="text-xl font-semibold mb-6 text-orange-400 flex items-center gap-2">
+            <i class="ri-database-2-line text-2xl"></i> Databases
+          </h3>
+          <div class="skill-tags">
+            <div class="skill-tag tag-orange"><i class="ri-server-line"></i> DBMS</div>
+            <div class="skill-tag tag-orange"><i class="ri-organization-chart"></i> Normalization</div>
+            <div class="skill-tag tag-orange"><i class="ri-key-2-line"></i> MySQL</div>
           </div>
         </div>
 
-        <!-- Tools -->
-        <div class="glass p-8 rounded-2xl reveal glow-card">
-          <div class="glow-content">
-            <h3 class="text-xl font-semibold mb-4 text-violet-400 flex items-center gap-2">
-              <i class="ri-tools-line text-2xl"></i> Tools & Version Control
-            </h3>
-            <ul class="text-gray-400 space-y-2">
-              <li>Git</li>
-              <li>GitHub</li>
-              <li>VS Code</li>
-            </ul>
+        <!-- Tools (Cyan) -->
+        <div class="glass p-8 rounded-2xl reveal skill-card">
+          <h3 class="text-xl font-semibold mb-6 text-cyan-400 flex items-center gap-2">
+            <i class="ri-tools-line text-2xl"></i> Tools
+          </h3>
+          <div class="skill-tags">
+            <div class="skill-tag tag-cyan"><i class="ri-git-branch-line"></i> Git & GitHub</div>
+            <div class="skill-tag tag-cyan"><i class="ri-code-box-line"></i> VS Code</div>
+            <div class="skill-tag tag-cyan"><i class="ri-openai-fill"></i> ChatGPT / Copilot</div>
           </div>
         </div>
 
-        <!-- AI & ML -->
-        <div class="glass p-8 rounded-2xl reveal glow-card">
-          <div class="glow-content">
-            <h3 class="text-xl font-semibold mb-4 text-violet-400 flex items-center gap-2">
-              <i class="ri-brain-line text-2xl"></i> AI & ML (Foundational)
-            </h3>
-            <ul class="text-gray-400 space-y-2">
-              <li>Machine Learning Concepts</li>
-              <li>Model Evaluation Basics</li>
-            </ul>
+        <!-- AI & ML (Pink) -->
+        <div class="glass p-8 rounded-2xl reveal skill-card">
+          <h3 class="text-xl font-semibold mb-6 text-pink-400 flex items-center gap-2">
+            <i class="ri-brain-line text-2xl"></i> AI & ML
+          </h3>
+          <div class="skill-tags">
+            <div class="skill-tag tag-pink"><i class="ri-robot-line"></i> ML Concepts</div>
+            <div class="skill-tag tag-pink"><i class="ri-line-chart-line"></i> Regression</div>
+            <div class="skill-tag tag-pink"><i class="ri-bubble-chart-line"></i> Clustering</div>
+            <div class="skill-tag tag-pink"><i class="ri-chat-1-line"></i> NLP Basics</div>
           </div>
         </div>
 
