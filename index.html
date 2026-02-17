@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,18 +13,60 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
   <style>
-    * { font-family: 'DM Sans', sans-serif; }
-    html { scroll-behavior: smooth; }
+    * {
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       background: radial-gradient(circle at top, #0f172a, #020617);
       color: #e5e7eb;
-      overflow-x: hidden;
     }
 
-    /* ================= UI ================= */
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes floatSlow {
+
+      0%,
+      100% {
+        transform: translateY(0) translateX(0);
+      }
+
+      50% {
+        transform: translateY(-40px) translateX(30px);
+      }
+    }
+
+    .animate-fade-in-up {
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+    }
+
+    .floating {
+      animation: floatSlow 18s ease-in-out infinite;
+    }
+
+    .floating-delay {
+      animation: floatSlow 22s ease-in-out infinite;
+    }
+
     .gradient-text {
       background: linear-gradient(135deg, #8b5cf6, #6366f1);
       -webkit-background-clip: text;
@@ -33,916 +76,863 @@
     .glass {
       background: rgba(15, 23, 42, 0.75);
       backdrop-filter: blur(14px);
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    /* ================= 3D BACKGROUND ================= */
-    .bg-3d {
-      position: fixed;
-      inset: 0;
-      z-index: -10;
-      pointer-events: none;
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all .8s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Typewriter Cursor */
+    .typing-cursor::after {
+      content: '|';
+      animation: blink 1s step-start infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    /* Active Nav Link */
+    .nav-link.active {
+      color: #8b5cf6;
+      /* violet-500 */
+      font-weight: 600;
+    }
+
+    .nav-link {
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: #8b5cf6;
+      transition: width 0.3s;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    /* Glow Effect */
+    .glow-card {
+      position: relative;
       overflow: hidden;
     }
 
-    .float-orb {
+    .glow-card::before {
+      content: '';
       position: absolute;
-      width: 320px;
-      height: 320px;
+      top: var(--y, 50%);
+      left: var(--x, 50%);
+      transform: translate(-50%, -50%);
+      width: 0;
+      height: 0;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
       border-radius: 50%;
-      filter: blur(60px);
-      opacity: 0.35;
-      animation: float3D 28s ease-in-out infinite;
+      opacity: 0;
+      transition: width 0.3s, height 0.3s, opacity 0.3s;
+      pointer-events: none;
+      z-index: 0;
     }
 
-    .orb-purple { background: radial-gradient(circle, #8b5cf6, transparent 70%); top: 10%; left: 5%; }
-    .orb-indigo { background: radial-gradient(circle, #6366f1, transparent 70%); bottom: 15%; right: 10%; animation-duration: 34s; }
-    .orb-blue   { background: radial-gradient(circle, #38bdf8, transparent 70%); top: 55%; left: 60%; animation-duration: 38s; }
+    .glow-card:hover::before {
+      width: 400px;
+      height: 400px;
+      opacity: 1;
+    }
 
-    .float-ring {
+    .glow-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Timeline Styles */
+    .timeline-container {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .timeline-container::after {
+      content: '';
       position: absolute;
-      width: 420px;
-      height: 420px;
+      width: 2px;
+      background: rgba(139, 92, 246, 0.3);
+      top: 0;
+      bottom: 0;
+      left: 20px;
+      margin-left: -1px;
+    }
+
+    .timeline-item {
+      padding: 10px 40px;
+      position: relative;
+      background-color: inherit;
+      width: 100%;
+    }
+
+    .timeline-dot {
+      width: 16px;
+      height: 16px;
+      background: #8b5cf6;
+      border: 4px solid #1e293b;
+      position: absolute;
+      left: 12px;
+      top: 15px;
       border-radius: 50%;
-      border: 1px solid rgba(99,102,241,0.25);
-      top: 35%;
-      left: 25%;
-      animation: rotate3D 42s linear infinite;
+      z-index: 1;
     }
 
-    /* Side-to-side AI Waves */
-    .ai-wave {
-      position: absolute;
-      width: 140%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(99,102,241,0.3), transparent);
-      animation: driftX 40s linear infinite;
-      opacity: 0.4;
-    }
-    .wave-1 { top: 30%; }
-    .wave-2 { top: 65%; animation-duration: 48s; }
-
-    /* Particles */
-    .tech-particle {
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(139,92,246,0.6);
-      filter: blur(1px);
-      animation: floatSide 30s ease-in-out infinite;
-    }
-    .p1 { top: 20%; left: 15%; }
-    .p2 { top: 50%; left: 75%; animation-duration: 36s; }
-    .p3 { top: 75%; left: 40%; animation-duration: 42s; }
-
-    /* Shapes */
-    .shape {
-      position: absolute;
-      opacity: 0.25;
-      animation: floatSide 34s ease-in-out infinite;
+    .timeline-content {
+      padding: 20px 30px;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      position: relative;
     }
 
-    .cube {
-      width: 60px;
-      height: 60px;
-      border: 1px solid rgba(99,102,241,0.5);
-    }
-    .c1 { top: 18%; left: 20%; }
-    .c2 { bottom: 22%; right: 18%; animation-duration: 40s; }
-
-    .hex {
-      width: 70px;
-      height: 40px;
-      border: 1px solid rgba(139,92,246,0.5);
-      clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-    }
-    .h1 { top: 45%; left: 65%; }
-    .h2 { top: 70%; left: 30%; animation-duration: 46s; }
-
-    /* Network Lines */
-    .network-lines {
-      position: absolute;
-      inset: 0;
-      opacity: 0.25;
-    }
-    .network-lines line {
-      stroke: rgba(99,102,241,0.6);
-      stroke-width: 1;
-      stroke-dasharray: 6 6;
-      animation: dashFlow 20s linear infinite;
+    .timeline-content:hover {
+      border-color: rgba(139, 92, 246, 0.5);
+      transform: translateX(5px);
+      transition: all 0.3s ease;
     }
 
-    /* Animations */
-    @keyframes float3D {
-      0% { transform: translate(0,0); }
-      50% { transform: translate(80px,-60px); }
-      100% { transform: translate(0,0); }
-    }
-    @keyframes rotate3D {
-      from { transform: rotateX(0) rotateY(0); }
-      to { transform: rotateX(360deg) rotateY(360deg); }
-    }
-    @keyframes driftX {
-      from { transform: translateX(-20%); }
-      to { transform: translateX(20%); }
-    }
-    @keyframes floatSide {
-      0% { transform: translate(0,0); }
-      50% { transform: translate(120px,-40px); }
-      100% { transform: translate(0,0); }
-    }
-    @keyframes dashFlow {
-      from { stroke-dashoffset: 0; }
-      to { stroke-dashoffset: -120; }
+    /* Project Image Hover */
+    .project-card:hover img {
+      transform: scale(1.05);
     }
 
-    /* Mobile optimization */
-    @media (max-width: 768px) {
-      .float-orb, .float-ring, .shape, .ai-wave, .tech-particle, .network-lines {
-        animation: none !important;
-        opacity: 0.15;
-      }
+    .project-card .img-wrapper {
+      overflow: hidden;
+      border-radius: 12px;
     }
   </style>
 </head>
 
-<body>
+<body class="overflow-x-hidden">
 
-<!-- ========== BACKGROUND EFFECTS ========== -->
-<div class="bg-3d">
-  <div class="float-orb orb-purple"></div>
-  <div class="float-orb orb-indigo"></div>
-  <div class="float-orb orb-blue"></div>
-  <div class="float-ring"></div>
-
-  <div class="ai-wave wave-1"></div>
-  <div class="ai-wave wave-2"></div>
-
-  <div class="tech-particle p1"></div>
-  <div class="tech-particle p2"></div>
-  <div class="tech-particle p3"></div>
-
-  <div class="shape cube c1"></div>
-  <div class="shape cube c2"></div>
-  <div class="shape hex h1"></div>
-  <div class="shape hex h2"></div>
-
-  <svg class="network-lines" viewBox="0 0 1000 600" preserveAspectRatio="none">
-    <line x1="100" y1="120" x2="400" y2="260"/>
-    <line x1="400" y1="260" x2="700" y2="180"/>
-    <line x1="700" y1="180" x2="900" y2="340"/>
-    <line x1="250" y1="420" x2="600" y2="360"/>
-  </svg>
-</div>
-
-<!-- ========== NAVBAR ========== -->
-<nav class="fixed top-0 w-full z-50 glass">
-  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-    <span class="font-bold text-xl gradient-text">Portfolio</span>
-    <div class="hidden md:flex gap-8 text-sm text-gray-300">
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#internship">Internship</a>
-      <a href="#certificates">Certificates</a>
-      <a href="#education">Education</a>
-      <a href="#contact">Contact</a>
+  <!-- ========== NAVBAR ========== -->
+  <nav class="fixed top-0 w-full z-50 glass">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <span class="font-bold text-xl gradient-text">Portfolio</span>
+      <div class="hidden md:flex gap-8 text-sm text-gray-300">
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#internship" class="nav-link">Internship</a>
+        <a href="#certificates" class="nav-link">Certificates</a>
+        <a href="#education" class="nav-link">Education</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<!-- CONTENT SECTIONS CONTINUE HERE -->
 
-<!-- ========== MOUSE PARALLAX ========== -->
-<script>
-  const parallaxItems = document.querySelectorAll(
-    '.float-orb, .float-ring, .shape, .ai-wave'
-  );
 
-  document.addEventListener('mousemove', (e) => {
-    const x = (e.clientX / window.innerWidth - 0.5) * 30;
-    const y = (e.clientY / window.innerHeight - 0.5) * 30;
 
-    parallaxItems.forEach((el, i) => {
-      const depth = (i + 1) * 0.12;
-      el.style.transform = `translate(${x * depth}px, ${y * depth}px)`;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- ========== HOME ========== -->
+  <section id="home" class="min-h-screen flex items-center justify-center pt-32 px-6 relative overflow-hidden">
+    <div class="absolute -top-40 -left-40 w-[500px] h-[500px] bg-violet-600/20 blur-3xl rounded-full floating"></div>
+    <div
+      class="absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-indigo-600/20 blur-3xl rounded-full floating-delay">
+    </div>
+
+    <div class="text-center max-w-4xl mx-auto">
+      <h1 class="text-5xl md:text-7xl font-extrabold mb-6 animate-fade-in-up">
+        <span class="gradient-text">Pilli Keshav Rao</span>
+      </h1>
+
+      <div class="h-8 mb-8 text-xl md:text-2xl text-violet-300 font-medium">
+        I am a <span id="typewriter" class="typing-cursor text-white"></span>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-3 mb-12">
+        <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full">Business Analyst</span>
+        <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full">Data Analytics</span>
+        <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full">Power BI</span>
+        <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full">Full Stack Python</span>
+        <span class="px-4 py-2 bg-violet-600/30 border border-violet-500/40 rounded-full text-violet-300"> GenAI</span>
+        <span class="px-4 py-2 bg-indigo-600/30 border border-indigo-500/40 rounded-full text-indigo-300"> Prompt
+          Engineering</span>
+
+      </div>
+
+      <div class="flex justify-center gap-6">
+        <a href="#projects" class="bg-violet-600 px-10 py-4 rounded-full font-semibold hover:scale-105 transition">
+          View Projects
+        </a>
+        <a href="#contact" class="border px-10 py-4 rounded-full hover:border-violet-500 transition">
+          Contact Me
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- ========== ABOUT ========== -->
+  <section id="about" class="py-28 px-6">
+    <div class="max-w-5xl mx-auto reveal">
+      <h2 class="text-4xl font-bold mb-6 gradient-text">About Me</h2>
+
+      <p class="text-gray-400 leading-relaxed mb-4">
+        I am a final-year Computer Science Engineering student specializing in Artificial
+        Intelligence and Machine Learning, with a strong interest in Business Analytics
+        and data-driven decision making. I enjoy working with data to identify patterns,
+        uncover insights, and support meaningful business outcomes.
+      </p>
+
+      <p class="text-gray-400 leading-relaxed mb-4">
+        My technical skill set includes Python, SQL, Power BI, Excel, and machine learning
+        fundamentals, which I have applied through academic and real-world projects such
+        as customer churn analysis, sales analytics dashboards, and predictive modeling
+        applications. These experiences have strengthened my ability to analyze data,
+        communicate insights, and solve practical problems.
+      </p>
+
+      <p class="text-gray-400 leading-relaxed">
+        My objective is to begin my career as a Business Analyst or Data Analyst, where I
+        can contribute to data-driven strategies, collaborate with cross-functional teams,
+        and continuously enhance my analytical, technical, and professional skills while
+        adding value to the organization.
+      </p>
+
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- ========== SKILLS ========== -->
+  <section id="skills" class="py-28 px-6 bg-black/30">
+    <div class="max-w-6xl mx-auto">
+
+      <h2 class="text-4xl font-bold text-center mb-16 reveal">
+        Skills & <span class="gradient-text">Expertise</span>
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-8">
+
+        <!-- Programming -->
+        <div class="glass p-8 rounded-2xl reveal glow-card">
+          <div class="glow-content">
+            <h3 class="text-xl font-semibold mb-4 text-violet-400 flex items-center gap-2">
+              <i class="ri-code-s-slash-line text-2xl"></i> Programming
+            </h3>
+            <ul class="text-gray-400 space-y-2">
+              <li>Python</li>
+              <li>Object-Oriented Programming (OOP)</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Data Analytics -->
+        <div class="glass p-8 rounded-2xl reveal glow-card">
+          <div class="glow-content">
+            <h3 class="text-xl font-semibold mb-4 text-violet-400 flex items-center gap-2">
+              <i class="ri-bar-chart-grouped-line text-2xl"></i> Data Analytics
+            </h3>
+            <ul class="text-gray-400 space-y-2">
+              <li>SQL</li>
+              <li>Data Cleaning</li>
+              <li>Exploratory Data Analysis (EDA)</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Visualization -->
+        <div class="glass p-8 rounded-2xl reveal glow-card">
+          <div class="glow-content">
+            <h3 class="text-xl font-semibold mb-4 text-violet-400 flex items-center gap-2">
+              <i class="ri-pie-chart-2-line text-2xl"></i> Visualization & Reporting
+            </h3>
+            <ul class="text-gray-400 space-y-2">
+              <li>Power BI</li>
+              <li>Tableau</li>
+              <li>MS Excel</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Databases -->
+        <div class="glass p-8 rounded-2xl reveal glow-card">
+          <div class="glow-content">
+            <h3 class="text-xl font-semibold mb-4 text-violet-400 flex items-center gap-2">
+              <i class="ri-database-2-line text-2xl"></i> Database Management
+            </h3>
+            <ul class="text-gray-400 space-y-2">
+              <li>DBMS</li>
+              <li>Data Normalization</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Tools -->
+        <div class="glass p-8 rounded-2xl reveal glow-card">
+          <div class="glow-content">
+            <h3 class="text-xl font-semibold mb-4 text-violet-400 flex items-center gap-2">
+              <i class="ri-tools-line text-2xl"></i> Tools & Version Control
+            </h3>
+            <ul class="text-gray-400 space-y-2">
+              <li>Git</li>
+              <li>GitHub</li>
+              <li>VS Code</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- AI & ML -->
+        <div class="glass p-8 rounded-2xl reveal glow-card">
+          <div class="glow-content">
+            <h3 class="text-xl font-semibold mb-4 text-violet-400 flex items-center gap-2">
+              <i class="ri-brain-line text-2xl"></i> AI & ML (Foundational)
+            </h3>
+            <ul class="text-gray-400 space-y-2">
+              <li>Machine Learning Concepts</li>
+              <li>Model Evaluation Basics</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- ========== PROJECTS ========== -->
+  <section id="projects" class="py-28 px-6">
+    <div class="max-w-6xl mx-auto">
+
+      <h2 class="text-4xl font-bold text-center mb-16 reveal">
+        Featured <span class="gradient-text">Projects</span>
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-8">
+
+        <!-- Project 1 -->
+        <div class="glass p-6 rounded-2xl reveal glow-card project-card">
+          <div class="glow-content">
+            <div class="img-wrapper mb-4 h-48">
+              <img src="https://placehold.co/600x400/1e293b/8b5cf6?text=Sales+Dashboard" alt="Sales Dashboard"
+                class="w-full h-full object-cover transition duration-500">
+            </div>
+            <h3 class="text-2xl font-semibold mb-3">
+              Customer & Sales Analysis Dashboard
+            </h3>
+            <p class="text-gray-400 mb-4 text-sm">
+              Developed an interactive Power BI dashboard to analyze sales performance,
+              customer behavior, and revenue trends. The project focuses on identifying
+              key business KPIs.
+            </p>
+            <p class="text-xs text-violet-400 mb-4 font-mono">
+              Power BI · Data Analysis
+            </p>
+            <a href="https://github.com/keshavraopilli749/Sales_report_using_PowerBi-main" target="_blank"
+              class="inline-flex items-center gap-2 text-violet-400 hover:text-violet-300 transition">
+              <i class="ri-github-line"></i> View on GitHub
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="glass p-6 rounded-2xl reveal glow-card project-card">
+          <div class="glow-content">
+            <div class="img-wrapper mb-4 h-48">
+              <img src="https://placehold.co/600x400/1e293b/8b5cf6?text=Pizza+Sales+Analysis" alt="Pizza Sales"
+                class="w-full h-full object-cover transition duration-500">
+            </div>
+            <h3 class="text-2xl font-semibold mb-3">
+              Pizza Sales Analysis (SQL & Power BI)
+            </h3>
+            <p class="text-gray-400 mb-4 text-sm">
+              Analyzed pizza sales data using SQL to extract meaningful insights related
+              to revenue, order trends, and best-selling items, visualized in Power BI.
+            </p>
+            <p class="text-xs text-violet-400 mb-4 font-mono">
+              SQL Server · Power BI
+            </p>
+            <a href="https://github.com/keshavraopilli749/Pizza-Sales-Project-SQL-PowerBI-main" target="_blank"
+              class="inline-flex items-center gap-2 text-violet-400 hover:text-violet-300 transition">
+              <i class="ri-github-line"></i> View on GitHub
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="glass p-6 rounded-2xl reveal glow-card project-card">
+          <div class="glow-content">
+            <div class="img-wrapper mb-4 h-48">
+              <img src="https://placehold.co/600x400/1e293b/8b5cf6?text=NLP+Medical+System" alt="NLP Medical"
+                class="w-full h-full object-cover transition duration-500">
+            </div>
+            <h3 class="text-2xl font-semibold mb-3">
+              Voice-Enabled NLP Medical Record System
+            </h3>
+            <p class="text-gray-400 mb-4 text-sm">
+              Built an NLP-based healthcare text mining system capable of processing
+              medical records using voice and text input with entity extraction.
+            </p>
+            <p class="text-xs text-violet-400 mb-4 font-mono">
+              Python · NLP · BERT
+            </p>
+            <a href="https://github.com/keshavraopilli749/Voice-NLP-based-Healthcare-Text-Mining-for-Medical-RECOREDS-"
+              target="_blank" class="inline-flex items-center gap-2 text-violet-400 hover:text-violet-300 transition">
+              <i class="ri-github-line"></i> View on GitHub
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="glass p-6 rounded-2xl reveal glow-card project-card">
+          <div class="glow-content">
+            <div class="img-wrapper mb-4 h-48">
+              <img src="https://placehold.co/600x400/1e293b/8b5cf6?text=Disease+Prediction" alt="Disease Prediction"
+                class="w-full h-full object-cover transition duration-500">
+            </div>
+            <h3 class="text-2xl font-semibold mb-3">
+              Multiple Disease Prediction Web App
+            </h3>
+            <p class="text-gray-400 mb-4 text-sm">
+              Developed a machine learning-based web application to predict multiple
+              diseases using user input parameters with an interactive UI.
+            </p>
+            <p class="text-xs text-violet-400 mb-4 font-mono">
+              Python · ML · Streamlit
+            </p>
+            <a href="https://github.com/keshavraopilli749/Multiple-Disease-Prediction-Webapp" target="_blank"
+              class="inline-flex items-center gap-2 text-violet-400 hover:text-violet-300 transition">
+              <i class="ri-github-line"></i> View on GitHub
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- ========== INTERNSHIP ========== -->
+  <section id="internship" class="py-28 px-6 bg-black/30">
+    <div class="max-w-5xl mx-auto reveal">
+
+      <h2 class="text-4xl font-bold mb-10">
+        Internship <span class="gradient-text">Experience</span>
+      </h2>
+
+      <div class="timeline-container reveal">
+
+        <!-- Internship Item -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h3 class="text-2xl font-semibold mb-1 text-white">
+              Data Analyst Intern
+            </h3>
+            <p class="text-sm text-violet-400 mb-3 flex items-center gap-2">
+              <i class="ri-building-line"></i> Oasis Infobyte <span class="text-gray-500">|</span> <i
+                class="ri-calendar-line"></i> 2024
+            </p>
+            <p class="text-gray-400 mb-4 text-sm leading-relaxed">
+              Focused on data cleaning, exploratory data analysis, and visualization. Collaborated with datasets to
+              identify trends and key performance indicators.
+            </p>
+            <ul class="text-gray-400 text-sm list-disc list-inside space-y-1 mb-3">
+              <li>Performed data cleaning using Python & SQL</li>
+              <li>Conducted EDA to find patterns</li>
+              <li>Designed Power BI dashboards</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- ========== CERTIFICATES ========== -->
+  <section id="certificates" class="py-28 px-6">
+    <div class="max-w-6xl mx-auto">
+
+      <h2 class="text-4xl font-bold text-center mb-16 reveal">
+        Certificates & <span class="gradient-text">Achievements</span>
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-8">
+
+        <div class="glass p-6 rounded-2xl card-hover reveal">
+          <h3 class="text-lg font-semibold mb-2">
+            Machine Learning with Python
+          </h3>
+          <p class="text-sm text-gray-400">
+            IBM · 2024
+          </p>
+        </div>
+
+        <div class="glass p-6 rounded-2xl card-hover reveal">
+          <h3 class="text-lg font-semibold mb-2">
+            A Crash Course in Data Science
+          </h3>
+          <p class="text-sm text-gray-400">
+            Coursera · 2024
+          </p>
+        </div>
+
+        <div class="glass p-6 rounded-2xl card-hover reveal">
+          <h3 class="text-lg font-semibold mb-2">
+            AI with Data Science
+          </h3>
+          <p class="text-sm text-gray-400">
+            Coursera · 2025
+          </p>
+        </div>
+
+        <div class="glass p-6 rounded-2xl card-hover reveal">
+          <h3 class="text-lg font-semibold mb-2">
+            Generative AI with Copilot
+          </h3>
+          <p class="text-sm text-gray-400">
+            Coursera · 2025
+          </p>
+        </div>
+
+        <div class="glass p-6 rounded-2xl card-hover reveal">
+          <h3 class="text-lg font-semibold mb-2">
+            Prompt Engineering with GPT
+          </h3>
+          <p class="text-sm text-gray-400">
+            Coursera · 2025
+          </p>
+        </div>
+
+        <div class="glass p-6 rounded-2xl card-hover reveal">
+          <h3 class="text-lg font-semibold mb-2">
+            Excel Automation using ChatGPT
+          </h3>
+          <p class="text-sm text-gray-400">
+            Data Analytics · 2024
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- ========== EDUCATION ========== -->
+  <section id="education" class="py-28 px-6 bg-black/30">
+    <div class="max-w-5xl mx-auto reveal">
+
+      <h2 class="text-4xl font-bold mb-10">
+        Education & <span class="gradient-text">Qualifications</span>
+      </h2>
+
+      <div class="timeline-container reveal">
+
+        <!-- B.Tech -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h3 class="text-xl font-semibold text-white">
+              B.Tech – Computer Science & Engineering (AI & ML)
+            </h3>
+            <p class="text-sm text-gray-400 mt-1">Vignan Institute of Technology and Science</p>
+            <p class="text-xs text-violet-400 mt-2 font-mono">2022 – 2026 · CGPA: 7.28</p>
+          </div>
+        </div>
+
+        <!-- Intermediate -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h3 class="text-xl font-semibold text-white">
+              Pre-University Education (Intermediate)
+            </h3>
+            <p class="text-sm text-gray-400 mt-1">Akshara Junior College</p>
+            <p class="text-xs text-violet-400 mt-2 font-mono">2020 – 2022 · 86.9%</p>
+          </div>
+        </div>
+
+        <!-- SSC -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h3 class="text-xl font-semibold text-white">
+              Secondary Education (SSC)
+            </h3>
+            <p class="text-sm text-gray-400 mt-1">Purnodaya High School</p>
+            <p class="text-xs text-violet-400 mt-2 font-mono">2020 · CGPA: 10.00</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- ========== CONTACT ========== -->
+  <section id="contact" class="py-28 px-6">
+    <div class="max-w-4xl mx-auto text-center reveal">
+
+      <h2 class="text-4xl font-bold mb-4">
+        Let’s <span class="gradient-text">Connect</span>
+      </h2>
+
+      <p class="text-gray-400 mb-10">
+        Open to internship and entry-level opportunities in Business Analytics,
+        Data Analytics, and related roles.
+      </p>
+
+      <div class="flex flex-col md:flex-row gap-6 justify-center">
+
+        <!-- Email -->
+        <a href="mailto:keshavraoplacement@gmail.com" class="bg-violet-600 hover:bg-violet-700 text-white
+                px-8 py-3 rounded-full font-medium
+                transition hover:scale-105 flex items-center gap-2">
+          <i class="ri-mail-send-line"></i> Email
+        </a>
+
+        <!-- Mobile -->
+        <a href="tel:+919391596522" class="border border-gray-500 hover:border-violet-500
+                px-8 py-3 rounded-full font-medium
+                transition hover:scale-105 flex items-center gap-2">
+          <i class="ri-phone-line"></i> +91 93915 96522
+        </a>
+
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/keshav-rao-pilli-a18101337" target="_blank" class="border border-gray-500 hover:border-violet-500
+                px-8 py-3 rounded-full font-medium
+                transition hover:scale-105 flex items-center gap-2">
+          <i class="ri-linkedin-fill"></i> LinkedIn
+        </a>
+
+        <!-- GitHub -->
+        <a href="https://github.com/keshavraopilli749" target="_blank" class="border border-gray-500 hover:border-violet-500
+                px-8 py-3 rounded-full font-medium
+                transition hover:scale-105 flex items-center gap-2">
+          <i class="ri-github-fill"></i> GitHub
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+  <footer class="py-6 text-center text-gray-500 border-t border-white/10">
+    © 2026 Pilli Keshav Rao
+  </footer>
+
+  <script>
+    // --- Glow Effect ---
+    const cards = document.querySelectorAll('.glow-card');
+    cards.forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--x', `${x}px`);
+        card.style.setProperty('--y', `${y}px`);
+      });
     });
-  });
-</script>
 
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ========== HOME ========== -->
-<section id="home" class="min-h-screen flex items-center justify-center pt-32 px-6 relative overflow-hidden">
-  <div class="absolute -top-40 -left-40 w-[500px] h-[500px] bg-violet-600/20 blur-3xl rounded-full floating"></div>
-  <div class="absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-indigo-600/20 blur-3xl rounded-full floating-delay"></div>
-
-  <div class="text-center max-w-4xl mx-auto">
-    <h1 class="text-5xl md:text-7xl font-extrabold mb-8 animate-fade-in-up">
-      <span class="gradient-text">Pilli Keshav Rao</span>
-    </h1>
-
-    <div class="flex flex-wrap justify-center gap-3 mb-12">
-      <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full">Business Analyst</span>
-      <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full">Data Analytics</span>
-      <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full">Power BI</span>
-      <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full">Full Stack Python</span>
-      <span class="px-4 py-2 bg-violet-600/30 border border-violet-500/40 rounded-full text-violet-300"> GenAI</span>
-      <span class="px-4 py-2 bg-indigo-600/30 border border-indigo-500/40 rounded-full text-indigo-300"> Prompt Engineering</span>
-     
-    </div>
-
-    <div class="flex justify-center gap-6">
-      <a href="#projects" class="bg-violet-600 px-10 py-4 rounded-full font-semibold hover:scale-105 transition">
-        View Projects
-      </a>
-      <a href="#contact" class="border px-10 py-4 rounded-full hover:border-violet-500 transition">
-        Contact Me
-      </a>
-    </div>
-  </div>
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ========== ABOUT ========== -->
-<section id="about" class="py-28 px-6">
-  <div class="max-w-5xl mx-auto reveal">
-    <h2 class="text-4xl font-bold mb-6 gradient-text">About Me</h2>
-
-    <p class="text-gray-400 leading-relaxed mb-4">
-      I am a final-year Computer Science Engineering student specializing in Artificial
-      Intelligence and Machine Learning, with a strong interest in Business Analytics
-      and data-driven decision making. I enjoy working with data to identify patterns,
-      uncover insights, and support meaningful business outcomes.
-    </p>
-
-    <p class="text-gray-400 leading-relaxed mb-4">
-      My technical skill set includes Python, SQL, Power BI, Excel, and machine learning
-      fundamentals, which I have applied through academic and real-world projects such
-      as customer churn analysis, sales analytics dashboards, and predictive modeling
-      applications. These experiences have strengthened my ability to analyze data,
-      communicate insights, and solve practical problems.
-    </p>
-
-    <p class="text-gray-400 leading-relaxed">
-      My objective is to begin my career as a Business Analyst or Data Analyst, where I
-      can contribute to data-driven strategies, collaborate with cross-functional teams,
-      and continuously enhance my analytical, technical, and professional skills while
-      adding value to the organization.
-    </p>
-
-  </div>
-</section>
-
-
-
-
-
-
-
-
-
-
-<!-- ========== SKILLS ========== -->
-<section id="skills" class="py-20 px-6 bg-black/30">
-  <div class="max-w-6xl mx-auto">
-
-    <h2 class="text-3xl font-bold text-center mb-14 reveal">
-      Skills & <span class="gradient-text">Expertise</span>
-    </h2>
-
-    <div class="grid md:grid-cols-3 gap-6">
-
-      <!-- Skill Card -->
-      <div class="glass p-5 rounded-xl reveal">
-        <h3 class="text-lg font-semibold mb-3 text-violet-400">
-          💻 Programming
-        </h3>
-        <ul class="text-gray-400 text-sm space-y-1">
-          <li>Python</li>
-          <li>Object-Oriented Programming</li>
-        </ul>
-      </div>
-
-      <div class="glass p-5 rounded-xl reveal">
-        <h3 class="text-lg font-semibold mb-3 text-violet-400">
-          📊 Data Analytics
-        </h3>
-        <ul class="text-gray-400 text-sm space-y-1">
-          <li>SQL</li>
-          <li>Data Cleaning</li>
-          <li>EDA</li>
-        </ul>
-      </div>
-
-      <div class="glass p-5 rounded-xl reveal">
-        <h3 class="text-lg font-semibold mb-3 text-violet-400">
-          📈 Visualization
-        </h3>
-        <ul class="text-gray-400 text-sm space-y-1">
-          <li>Power BI</li>
-          <li>Tableau</li>
-          <li>Excel</li>
-        </ul>
-      </div>
-
-      <div class="glass p-5 rounded-xl reveal">
-        <h3 class="text-lg font-semibold mb-3 text-violet-400">
-          🗄 Databases
-        </h3>
-        <ul class="text-gray-400 text-sm space-y-1">
-          <li>DBMS</li>
-          <li>Normalization</li>
-        </ul>
-      </div>
-
-      <div class="glass p-5 rounded-xl reveal">
-        <h3 class="text-lg font-semibold mb-3 text-violet-400">
-          🛠 Tools
-        </h3>
-        <ul class="text-gray-400 text-sm space-y-1">
-          <li>Git</li>
-          <li>GitHub</li>
-          <li>VS Code</li>
-        </ul>
-      </div>
-
-      <div class="glass p-5 rounded-xl reveal">
-        <h3 class="text-lg font-semibold mb-3 text-violet-400">
-          🤖 AI & ML
-        </h3>
-        <ul class="text-gray-400 text-sm space-y-1">
-          <li>ML Concepts</li>
-          <li>Model Evaluation</li>
-        </ul>
-      </div>
-
-      <div class="glass p-5 rounded-xl reveal">
-        <h3 class="text-lg font-semibold mb-3 text-violet-400">
-          🧠 GenAI
-        </h3>
-        <ul class="text-gray-400 text-sm space-y-1">
-          <li>LLMs</li>
-          <li>Prompt Engineering</li>
-          <li>Use Cases</li>
-        </ul>
-      </div>
-
-      <div class="glass p-5 rounded-xl reveal">
-        <h3 class="text-lg font-semibold mb-3 text-violet-400">
-          ⛓ Blockchain
-        </h3>
-        <ul class="text-gray-400 text-sm space-y-1">
-          <li>Fundamentals</li>
-          <li>Smart Contracts</li>
-          <li>DApps</li>
-        </ul>
-      </div>
-
-      <div class="glass p-5 rounded-xl reveal">
-        <h3 class="text-lg font-semibold mb-3 text-violet-400">
-          ☁ Cloud
-        </h3>
-        <ul class="text-gray-400 text-sm space-y-1">
-          <li>IaaS, PaaS, SaaS</li>
-          <li>Deployment Models</li>
-        </ul>
-      </div>
-
-      <div class="glass p-5 rounded-xl reveal">
-        <h3 class="text-lg font-semibold mb-3 text-violet-400">
-          🚀 AWS
-        </h3>
-        <ul class="text-gray-400 text-sm space-y-1">
-          <li>EC2, S3</li>
-          <li>IAM</li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ========== PROJECTS ========== -->
-<section id="projects" class="py-28 px-6">
-  <div class="max-w-6xl mx-auto">
-
-    <h2 class="text-4xl font-bold text-center mb-16 reveal">
-      Featured <span class="gradient-text">Projects</span>
-    </h2>
-
-    <div class="grid md:grid-cols-2 gap-8">
-
-      <!-- Project 1 -->
-      <div class="glass p-8 rounded-2xl reveal card-hover">
-        <h3 class="text-2xl font-semibold mb-3">
-          Customer & Sales Analysis Dashboard
-        </h3>
-        <p class="text-gray-400 mb-4">
-          Developed an interactive Power BI dashboard to analyze sales performance,
-          customer behavior, and revenue trends. The project focuses on identifying
-          key business KPIs and providing data-driven insights for decision making.
-        </p>
-        <p class="text-sm text-violet-400 mb-4">
-          Power BI · Data Analysis · Business Intelligence
-        </p>
-        <a href="https://github.com/keshavraopilli749/Sales_report_using_PowerBi-main"
-           target="_blank"
-           class="inline-block text-violet-400 hover:underline">
-          🔗 View on GitHub
-        </a>
-      </div>
-
-      <!-- Project 2 -->
-      <div class="glass p-8 rounded-2xl reveal card-hover">
-        <h3 class="text-2xl font-semibold mb-3">
-          Pizza Sales Analysis (SQL & Power BI)
-        </h3>
-        <p class="text-gray-400 mb-4">
-          Analyzed pizza sales data using SQL to extract meaningful insights related
-          to revenue, order trends, and best-selling items. Built Power BI dashboards
-          to visualize KPIs and support business performance evaluation.
-        </p>
-        <p class="text-sm text-violet-400 mb-4">
-          SQL Server · Power BI · Data Visualization
-        </p>
-        <a href="https://github.com/keshavraopilli749/Pizza-Sales-Project-SQL-PowerBI-main"
-           target="_blank"
-           class="inline-block text-violet-400 hover:underline">
-          🔗 View on GitHub
-        </a>
-      </div>
-
-      <!-- Project 3 -->
-      <div class="glass p-8 rounded-2xl reveal card-hover">
-        <h3 class="text-2xl font-semibold mb-3">
-          Voice-Enabled NLP Medical Record System
-        </h3>
-        <p class="text-gray-400 mb-4">
-          Built an NLP-based healthcare text mining system capable of processing
-          medical records using voice and text input. Implemented entity extraction
-          and text analysis techniques to support efficient medical data interpretation.
-        </p>
-        <p class="text-sm text-violet-400 mb-4">
-          Python · NLP · spaCy · NLTK · BERT
-        </p>
-        <a href="https://github.com/keshavraopilli749/Voice-NLP-based-Healthcare-Text-Mining-for-Medical-RECOREDS-"
-           target="_blank"
-           class="inline-block text-violet-400 hover:underline">
-          🔗 View on GitHub
-        </a>
-      </div>
-
-      <!-- Project 4 -->
-      <div class="glass p-8 rounded-2xl reveal card-hover">
-        <h3 class="text-2xl font-semibold mb-3">
-          Multiple Disease Prediction Web Application
-        </h3>
-        <p class="text-gray-400 mb-4">
-          Developed a machine learning-based web application to predict multiple
-          diseases using user input parameters. The application demonstrates
-          end-to-end ML deployment using an interactive user interface.
-        </p>
-        <p class="text-sm text-violet-400 mb-4">
-          Python · Machine Learning · Streamlit
-        </p>
-        <a href="https://github.com/keshavraopilli749/Multiple-Disease-Prediction-Webapp"
-           target="_blank"
-           class="inline-block text-violet-400 hover:underline">
-          🔗 View on GitHub
-        </a>
-      </div>
-
-
-<!--Project 5 --->
-<!-- Project : RAG-Powered Enterprise Email Support Assistant -->
-<div class="glass p-8 rounded-2xl reveal card-hover">
-  <h3 class="text-2xl font-semibold mb-3">
-    RAG-Powered Enterprise Email Support Assistant
-  </h3>
-  <p class="text-gray-400 mb-4">
-    Built an enterprise-grade AI system to automate customer support emails using
-    a multi-agent workflow. The system classifies incoming emails, retrieves
-    relevant organizational knowledge using Retrieval-Augmented Generation (RAG),
-    generates accurate responses, and performs AI-based quality checks before
-    sending replies.
-  </p>
-  <p class="text-sm text-violet-400 mb-4">
-    Python · LangChain · LangGraph · RAG · Gmail API · FastAPI
-  </p>
-  <a href="https://github.com/keshavraopilli749/RAG-Powered-Enterprise-Email-Support-Assistant"
-     target="_blank"
-     class="inline-block text-violet-400 hover:underline">
-    🔗 View on GitHub
-  </a>
-</div>
-
-<!-- Project6 : AI Resume Analyzer & Job Matcher -->
-<div class="glass p-8 rounded-2xl reveal card-hover">
-  <h3 class="text-2xl font-semibold mb-3">
-    AI Resume Analyzer & Job Matcher
-  </h3>
-  <p class="text-gray-400 mb-4">
-    Developed an AI-powered application that analyzes resumes, extracts skills and
-    experience using NLP techniques, and intelligently matches candidates with
-    suitable job roles. The system provides resume scores, job-fit analysis, and
-    personalized recommendations to improve employability.
-  </p>
-  <p class="text-sm text-violet-400 mb-4">
-    Python · NLP · Machine Learning · Resume Parsing · Streamlit
-  </p>
-  <a href="https://github.com/keshavraopilli749/AI-Resume-Analyzer-Job-Matcher"
-     target="_blank"
-     class="inline-block text-violet-400 hover:underline">
-    🔗 View on GitHub
-  </a>
-</div>
-
-<!-- Project 7 -->
-<div class="glass p-8 rounded-2xl reveal card-hover">
-  <h3 class="text-2xl font-semibold mb-3">
-    Spark ETL Pipeline for Large-Scale Data Processing
-  </h3>
-
-  <p class="text-gray-400 mb-4">
-    Designed and implemented a scalable ETL pipeline using Apache Spark to
-    process large datasets. The pipeline performs data extraction, cleaning,
-    transformation, and loads optimized analytics-ready data for downstream
-    analysis.
-  </p>
-
-  <p class="text-sm text-violet-400 mb-4">
-    Apache Spark · PySpark · Python · Spark SQL · Parquet
-  </p>
-
-  <a href="https://github.com/keshavraopilli749/Spark-ETL-Pipeline-main"
-     target="_blank"
-     class="inline-block text-violet-400 hover:underline">
-    🔗 View on GitHub
-  </a>
-</div>
-
-
-
-
-
-
-
-
-      
-
-      
-      
-    </div>
-  </div>
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ========== INTERNSHIP ========== -->
-<section id="internship" class="py-28 px-6 bg-black/30">
-  <div class="max-w-5xl mx-auto reveal">
-
-    <h2 class="text-4xl font-bold mb-10">
-      Internship <span class="gradient-text">Experience</span>
-    </h2>
-
-    <div class="glass p-8 rounded-2xl card-hover">
-
-      <h3 class="text-2xl font-semibold mb-1">
-        Data Analyst Intern
-      </h3>
-
-      <p class="text-sm text-violet-400 mb-4">
-        Oasis Infobyte · Remote · 2024 
-      </p>
-
-      <p class="text-gray-400 mb-4">
-        Worked as a Data Analyst Intern focusing on data cleaning, exploratory data
-        analysis, and visualization to support business-oriented insights. Collaborated
-        with datasets to identify trends, patterns, and key performance indicators.
-      </p>
-
-      <ul class="text-gray-400 list-disc list-inside space-y-2 mb-4">
-        <li>Performed data cleaning and preprocessing using Python and SQL</li>
-        <li>Conducted Exploratory Data Analysis (EDA) to identify patterns and anomalies</li>
-        <li>Designed interactive dashboards and reports using Power BI</li>
-        <li>Extracted actionable business insights to support data-driven decisions</li>
-      </ul>
-
-      <p class="text-sm text-violet-400">
-        Python · SQL · Power BI · Data Analysis · EDA
-      </p>
-
-    </div>
-  </div>
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ========== CERTIFICATES ========== -->
-<section id="certificates" class="py-28 px-6">
-  <div class="max-w-6xl mx-auto">
-
-    <h2 class="text-4xl font-bold text-center mb-16 reveal">
-      Certificates & <span class="gradient-text">Achievements</span>
-    </h2>
-
-    <div class="grid md:grid-cols-3 gap-8">
-
-      <div class="glass p-6 rounded-2xl card-hover reveal">
-        <h3 class="text-lg font-semibold mb-2">
-          Machine Learning with Python
-        </h3>
-        <p class="text-sm text-gray-400">
-          IBM · 2024
-        </p>
-      </div>
-
-      <div class="glass p-6 rounded-2xl card-hover reveal">
-        <h3 class="text-lg font-semibold mb-2">
-          A Crash Course in Data Science
-        </h3>
-        <p class="text-sm text-gray-400">
-          Coursera · 2024
-        </p>
-      </div>
-
-      <div class="glass p-6 rounded-2xl card-hover reveal">
-        <h3 class="text-lg font-semibold mb-2">
-          AI with Data Science
-        </h3>
-        <p class="text-sm text-gray-400">
-          Coursera · 2025
-        </p>
-      </div>
-
-      <div class="glass p-6 rounded-2xl card-hover reveal">
-        <h3 class="text-lg font-semibold mb-2">
-          Generative AI with Copilot
-        </h3>
-        <p class="text-sm text-gray-400">
-          Coursera · 2025
-        </p>
-      </div>
-
-      <div class="glass p-6 rounded-2xl card-hover reveal">
-        <h3 class="text-lg font-semibold mb-2">
-          Prompt Engineering with GPT
-        </h3>
-        <p class="text-sm text-gray-400">
-          Coursera · 2025
-        </p>
-      </div>
-
-      <div class="glass p-6 rounded-2xl card-hover reveal">
-        <h3 class="text-lg font-semibold mb-2">
-          Excel Automation using ChatGPT
-        </h3>
-        <p class="text-sm text-gray-400">
-          Data Analytics · 2024
-        </p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ========== EDUCATION ========== -->
-<section id="education" class="py-28 px-6 bg-black/30">
-  <div class="max-w-5xl mx-auto reveal">
-
-    <h2 class="text-4xl font-bold mb-10">
-      Education & <span class="gradient-text">Qualifications</span>
-    </h2>
-
-    <div class="space-y-8">
-
-      <!-- B.Tech -->
-      <div class="glass p-8 rounded-2xl card-hover">
-        <h3 class="text-xl font-semibold mb-1">
-          B.Tech – Computer Science & Engineering (AI & ML)
-        </h3>
-        <p class="text-gray-400">
-          Vignan Institute of Technology and Science, Hyderabad | 2026 Passout        </p>
-        <p class="text-sm text-violet-400 mt-1">
-          2022 – 2026 · CGPA: 7.28 / 10.00 (Till 6th Semester)
-        </p>
-      </div>
-
-      <!-- Intermediate -->
-      <div class="glass p-8 rounded-2xl card-hover">
-        <h3 class="text-xl font-semibold mb-1">
-          Pre-University Education (Intermediate)
-        </h3>
-        <p class="text-gray-400">
-          Akshara Junior College
-        </p>
-        <p class="text-sm text-violet-400 mt-1">
-          2020 – 2022 · Percentage: 86.9%
-        </p>
-      </div>
-
-      <!-- SSC -->
-      <div class="glass p-8 rounded-2xl card-hover">
-        <h3 class="text-xl font-semibold mb-1">
-          Secondary Education (SSC)
-        </h3>
-        <p class="text-gray-400">
-          Purnodaya High School
-        </p>
-        <p class="text-sm text-violet-400 mt-1">
-          2020 · CGPA: 10.00 / 10.00
-        </p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ========== CONTACT ========== -->
-<section id="contact" class="py-28 px-6">
-  <div class="max-w-4xl mx-auto text-center reveal">
-
-    <h2 class="text-4xl font-bold mb-4">
-      Let’s <span class="gradient-text">Connect</span>
-    </h2>
-
-    <p class="text-gray-400 mb-10">
-      Open to internship and entry-level opportunities in Business Analytics,
-      Data Analytics, and related roles.
-    </p>
-
-    <div class="flex flex-col md:flex-row gap-6 justify-center">
-
-      <!-- Email -->
-      <a href="mailto:keshavraoplacement@gmail.com"
-         class="bg-violet-600 hover:bg-violet-700 text-white
-                px-8 py-3 rounded-full font-medium
-                transition hover:scale-105">
-        📧 Email
-      </a>
-
-      <!-- Mobile -->
-      <a href="tel:+919391596522"
-         class="border border-gray-500 hover:border-violet-500
-                px-8 py-3 rounded-full font-medium
-                transition hover:scale-105">
-        📞 +91 93915 96522
-      </a>
-
-      <!-- LinkedIn -->
-      <a href="https://www.linkedin.com/in/keshav-rao-pilli-a18101337"
-         target="_blank"
-         class="border border-gray-500 hover:border-violet-500
-                px-8 py-3 rounded-full font-medium
-                transition hover:scale-105">
-        💼 LinkedIn
-      </a>
-
-      <!-- GitHub -->
-      <a href="https://github.com/keshavraopilli749"
-         target="_blank"
-         class="border border-gray-500 hover:border-violet-500
-                px-8 py-3 rounded-full font-medium
-                transition hover:scale-105">
-        🧑‍💻 GitHub
-      </a>
-
-    </div>
-
-  </div>
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-<footer class="py-6 text-center text-gray-500 border-t border-white/10">
-  © 2026 Pilli Keshav Rao
-</footer>
-
-<script>
-  const reveals = document.querySelectorAll('.reveal');
-  const revealOnScroll = () => {
-    reveals.forEach(el => {
-      if (el.getBoundingClientRect().top < window.innerHeight * 0.85) {
-        el.classList.add('active');
+    // --- Typewriter Effect ---
+    const roles = [
+      "Business Analyst",
+      "Data Analyst",
+      "Power BI Developer",
+      "Python Developer",
+      "Prompt Engineer"
+    ];
+    const typeWriterElement = document.getElementById('typewriter');
+    let roleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typeSpeed = 100;
+
+    function type() {
+      const currentRole = roles[roleIndex];
+      if (isDeleting) {
+        typeWriterElement.textContent = currentRole.substring(0, charIndex - 1);
+        charIndex--;
+        typeSpeed = 50;
+      } else {
+        typeWriterElement.textContent = currentRole.substring(0, charIndex + 1);
+        charIndex++;
+        typeSpeed = 100;
       }
+
+      if (!isDeleting && charIndex === currentRole.length) {
+        isDeleting = true;
+        typeSpeed = 2000; // Pause at end
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        roleIndex = (roleIndex + 1) % roles.length;
+        typeSpeed = 500; // Pause before new word
+      }
+
+      setTimeout(type, typeSpeed);
+    }
+    document.addEventListener('DOMContentLoaded', type);
+
+    // --- Active Nav Link (ScrollSpy) ---
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').includes(current)) {
+          link.classList.add('active');
+        }
+      });
     });
-  };
-  window.addEventListener('scroll', revealOnScroll);
-  revealOnScroll();
-</script>
+
+    const reveals = document.querySelectorAll('.reveal');
+    const revealOnScroll = () => {
+      reveals.forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.85) {
+          el.classList.add('active');
+        }
+      });
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+  </script>
 
 </body>
+
 </html>
-
-
-
-
-
-
-
