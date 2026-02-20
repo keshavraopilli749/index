@@ -74,7 +74,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 1.25rem; /* consistent spacing between stacked items */
+      gap: 1rem; /* tightened spacing for better balance */
       width: 100%;
       max-width: 64rem;
     }
@@ -452,6 +452,9 @@
   <nav class="fixed top-0 w-full z-50 glass" role="navigation" aria-label="Primary navigation">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
       <span class="font-bold text-xl gradient-text">Portfolio</span>
+      <button id="mobile-toggle" class="md:hidden inline-flex items-center justify-center p-2 rounded-md border border-white/10 text-gray-100" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M3 6h18M3 12h18M3 18h18"></path></svg>
+      </button>
       <div class="hidden md:flex gap-8 text-sm text-gray-100">
         <a href="#home" class="nav-link">Home</a>
         <a href="#about" class="nav-link">About</a>
@@ -464,6 +467,20 @@
       </div>
     </div>
   </nav></header>
+
+  <!-- Mobile navigation (small screens) -->
+  <div id="mobile-nav" class="hidden md:hidden fixed top-16 left-0 w-full bg-black/70 backdrop-blur-sm z-40">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-2">
+      <a href="#home" class="mobile-nav-link text-lg py-3 border-b border-white/5">Home</a>
+      <a href="#about" class="mobile-nav-link text-lg py-3 border-b border-white/5">About</a>
+      <a href="#skills" class="mobile-nav-link text-lg py-3 border-b border-white/5">Skills</a>
+      <a href="#projects" class="mobile-nav-link text-lg py-3 border-b border-white/5">Projects</a>
+      <a href="#internship" class="mobile-nav-link text-lg py-3 border-b border-white/5">Internship</a>
+      <a href="#certificates" class="mobile-nav-link text-lg py-3 border-b border-white/5">Certificates</a>
+      <a href="#education" class="mobile-nav-link text-lg py-3 border-b border-white/5">Education</a>
+      <a href="#contact" class="mobile-nav-link text-lg py-3">Contact</a>
+    </div>
+  </div>
 
 
 
@@ -520,8 +537,6 @@
           Contact Me
         </a>
       </div>
-
-      <img src="file:///D:/MY%20RESUME/Pass_Photo.png" alt="Pilli Keshav Rao portrait" loading="lazy" width="144" height="144" class="mx-auto rounded-full w-36 h-36 object-cover border-4 border-white/5 shadow-lg mt-8">
     </div>
   </section>
 
@@ -1270,6 +1285,47 @@
     window.addEventListener('scroll', revealOnScroll);
     revealOnScroll();
     window.dispatchEvent(new Event('scroll'));
+
+    // --- Mobile menu toggle ---
+    (function(){
+      const toggle = document.getElementById('mobile-toggle');
+      const mobileNav = document.getElementById('mobile-nav');
+      if (!toggle || !mobileNav) return;
+      const openIcon = toggle.innerHTML;
+      const closeIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+
+      function closeMenu() {
+        mobileNav.classList.add('hidden');
+        mobileNav.classList.remove('flex');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.innerHTML = openIcon;
+        document.body.style.overflow = '';
+      }
+
+      toggle.addEventListener('click', () => {
+        const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!isOpen));
+        mobileNav.classList.toggle('hidden');
+        mobileNav.classList.toggle('flex');
+        if (!isOpen) {
+          document.body.style.overflow = 'hidden';
+          const firstLink = mobileNav.querySelector('a');
+          if (firstLink) firstLink.focus();
+          toggle.innerHTML = closeIcon;
+        } else {
+          closeMenu();
+        }
+      });
+
+      mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => closeMenu()));
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !mobileNav.classList.contains('hidden')) {
+          closeMenu();
+          toggle.focus();
+        }
+      });
+    })();
   </script>
 
   <script>
