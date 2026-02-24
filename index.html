@@ -334,6 +334,24 @@
       border-radius: 12px;
     }
 
+    /* 3D UI: page perspective, depth layers and tilt-enabled cards */
+    main { perspective: 1000px; perspective-origin: 50% 10%; transform-style: preserve-3d; }
+    .parallax-layer { will-change: transform; transform: translate3d(0,0,0); }
+
+    .tilt-card { transform-style: preserve-3d; will-change: transform; transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms; }
+    .tilt-card:focus { outline: none; }
+
+    /* subtle extra depth on hover (disabled for reduced-motion/mobile) */
+    @media (prefers-reduced-motion: no-preference) {
+      .tilt-card:hover { box-shadow: 0 18px 40px rgba(2,6,23,0.55); }
+    }
+
+    @media (max-width: 640px) {
+      .parallax-layer { transform: none !important; }
+      .tilt-card { transition: none; box-shadow: none; }
+      main { perspective: none; }
+    }
+
     /* Skills — refined grid, cards & typography (responsive) */
     .section-title { font-size: clamp(20px, 2.2vw, 24px); font-weight: 600; margin: 0 0 1rem 0; }
 
@@ -505,10 +523,8 @@
 
   <!-- ========== HOME ========== -->
   <section id="home" class="min-h-screen grid place-items-center px-6 relative overflow-hidden hero-section">
-    <div class="absolute -top-40 -left-40 w-[500px] h-[500px] bg-violet-600/20 blur-3xl rounded-full floating"></div>
-    <div
-      class="absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-indigo-600/20 blur-3xl rounded-full floating-delay">
-    </div>
+    <div class="absolute -top-40 -left-40 w-[500px] h-[500px] bg-violet-600/20 blur-3xl rounded-full floating parallax-layer" data-depth="0.06" aria-hidden="true"></div>
+    <div class="absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-indigo-600/20 blur-3xl rounded-full floating-delay parallax-layer" data-depth="-0.04" aria-hidden="true"></div>
 
     <div class="hero-inner text-center max-w-4xl mx-auto">
       <h1 class="text-5xl md:text-7xl font-extrabold mb-6 animate-fade-in-up hero-title">
@@ -917,6 +933,27 @@
           </div>
         </div>
 
+        <!-- Project 10: React E-Commerce -->
+        <div class="glass p-6 rounded-2xl glow-card project-card">
+          <div class="glow-content">
+            <div class="img-wrapper mb-4 h-48">
+              <img loading="lazy" src="https://placehold.co/600x400/1e293b/8b5cf6?text=React+E-Commerce" alt="React E-Commerce" class="w-full h-full object-cover transition duration-500">
+            </div>
+            <h3 class="text-2xl font-semibold mb-3">
+              React E-Commerce Web Application
+            </h3>
+            <p class="text-gray-400 mb-4 text-sm">
+              A modern e-commerce frontend built with React, featuring product listings, cart functionality, and responsive design.
+            </p>
+            <p class="text-xs text-violet-400 mb-4 font-mono">
+              React · JavaScript · Web App
+            </p>
+            <a href="https://github.com/keshavraopilli749/React-E-Commerce-Web-Application/tree/main" target="_blank" class="inline-flex items-center gap-2 text-violet-400 hover:text-violet-300 transition">
+              <i class="ri-github-line"></i> View on GitHub
+            </a>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -1087,7 +1124,7 @@
               B.Tech – Computer Science & Engineering (AI & ML)
             </h3>
             <p class="text-sm text-gray-400 mt-1">Vignan Institute of Technology and Science</p>
-            <p class="text-xs text-violet-400 mt-2 font-mono">2022 – 2026 · CGPA: 7.38</p>
+            <p class="text-xs text-violet-400 mt-2 font-mono">2022 – 2026 · CGPA: 7.28</p>
           </div>
         </div>
 
@@ -1329,6 +1366,78 @@
   </script>
 
   <script>
+    /* 3D UI enhancements — parallax layers + card tilt (lightweight, accessible) */
+    (function(){
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      // CARD TILT (pointer-based, performant)
+      const tiltEls = document.querySelectorAll('.project-card, .skill-card');
+      tiltEls.forEach(el => {
+        el.classList.add('tilt-card');
+        let rect = null, raf = null;
+
+        function updateTransform(clientX, clientY) {
+          rect = rect || el.getBoundingClientRect();
+          const px = (clientX - rect.left) / rect.width;
+          const py = (clientY - rect.top) / rect.height;
+          const rotY = (px - 0.5) * 12; // degrees
+          const rotX = (0.5 - py) * 10; // degrees
+          const tz = 6; // translateZ px
+          if (raf) cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => {
+            el.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(${tz}px)`;
+            el.style.boxShadow = `${-rotY}px ${Math.abs(rotX)}px 30px rgba(2,6,23,0.45)`;
+          });
+        }
+
+        function onPointerMove(e){
+          const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+          const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+          updateTransform(clientX, clientY);
+        }
+        function reset(){ if (raf) cancelAnimationFrame(raf); raf = requestAnimationFrame(()=>{ el.style.transform=''; el.style.boxShadow=''; rect=null; }); }
+
+        el.addEventListener('pointermove', onPointerMove);
+        el.addEventListener('pointerleave', reset);
+        el.addEventListener('pointercancel', reset);
+      });
+
+      // SCROLL PARALLAX for decorative layers
+      const layers = document.querySelectorAll('.parallax-layer');
+      const onParallax = () => {
+        const sc = window.scrollY;
+        layers.forEach(l => {
+          const depth = parseFloat(l.dataset.depth) || 0.03;
+          const y = Math.round(sc * depth);
+          l.style.transform = `translate3d(0, ${y}px, 0)`;
+        });
+      };
+      window.addEventListener('scroll', () => requestAnimationFrame(onParallax), {passive:true});
+      onParallax();
+
+      // subtle main parallax on mouse (non-intrusive)
+      const root = document.querySelector('main');
+      let mx = 0, my = 0;
+      window.addEventListener('mousemove', (e)=>{
+        mx = (e.clientX / window.innerWidth) * 2 - 1;
+        my = (e.clientY / window.innerHeight) * 2 - 1;
+        requestAnimationFrame(()=>{ if (root) root.style.transform = `translate3d(${mx*6}px, ${my*6}px, 0)`; });
+      });
+
+      // disable effects on small screens
+      const applyMobileFallback = () => {
+        if (window.innerWidth <= 640) {
+          layers.forEach(l => l.style.transform = '');
+          tiltEls.forEach(e => { e.style.transform=''; e.style.boxShadow=''; });
+          if (root) root.style.transform = '';
+        }
+      };
+      window.addEventListener('resize', applyMobileFallback);
+      applyMobileFallback();
+    })();
+  </script>
+
+  <script>
   (function(){
     if (typeof THREE === 'undefined') return; // three.js not loaded
     const container = document.getElementById('bg');
@@ -1438,4 +1547,3 @@
 </body>
 
 </html>
-
