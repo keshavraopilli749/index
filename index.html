@@ -70,61 +70,162 @@
       left: 50%;
       transform: translateX(-50%);
       width: min(1180px, calc(100% - 2rem));
+      height: 76px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: .7rem .75rem .7rem 1.1rem;
-      background: rgba(255, 253, 247, .8);
-      border: 1px solid rgba(16, 35, 29, .12);
-      border-radius: 18px;
-      backdrop-filter: blur(18px);
-      box-shadow: 0 12px 35px rgba(16, 35, 29, .08);
+      padding: 0 24px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(229, 231, 235, 0.5);
+      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+      animation: fadeInDown 0.6s ease-out;
+      transition: all 0.3s ease;
+    }
+
+    .site-header.scrolled {
+      height: 64px;
+      background: rgba(255, 255, 255, 0.95);
+      border-color: #E5E7EB;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translate(-50%, -20px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: .7rem;
+      gap: 12px;
       text-decoration: none;
-      font-weight: 800;
-      letter-spacing: -.03em;
     }
 
     .brand-mark {
       display: grid;
       place-items: center;
-      width: 32px;
+      width: 42px;
       aspect-ratio: 1;
-      border-radius: 9px;
-      background: var(--green);
-      color: var(--yellow);
-      font-size: .75rem;
+      border-radius: 12px;
+      background: #12372A;
+      color: #ffffff;
+      font-size: 1.1rem;
+      font-weight: 800;
     }
 
-    .nav { display: flex; align-items: center; gap: .2rem; }
-    .nav a {
-      padding: .65rem .85rem;
-      color: var(--muted);
-      font-size: .82rem;
-      font-weight: 700;
-      text-decoration: none;
-      border-radius: 10px;
-      transition: .2s ease;
+    .brand-text {
+      display: flex;
+      flex-direction: column;
     }
-    .nav a:hover, .nav a.active { color: var(--ink); background: var(--paper-2); }
-    .nav .nav-cta { color: white; background: var(--green); margin-left: .35rem; }
-    .nav .nav-cta:hover { color: white; background: var(--green-2); }
+
+    .brand-name {
+      color: #10231d;
+      font-weight: 700;
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    .brand-title {
+      color: #60716a;
+      font-size: 0.75rem;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+
+    .nav-container {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav { 
+      display: flex; 
+      align-items: center; 
+      gap: 8px; 
+    }
+
+    .nav a {
+      padding: 8px 16px;
+      color: #374151;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      border-radius: 99px;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .nav a:not(.nav-cta):hover {
+      background: #e9f0ed;
+      color: #12372A;
+    }
+
+    .nav a.active {
+      color: #12372A;
+      font-weight: 600;
+    }
+
+    .nav a.active::after {
+      content: "";
+      position: absolute;
+      bottom: 2px;
+      left: 16px;
+      right: 16px;
+      height: 2px;
+      background: #12372A;
+      border-radius: 2px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 44px;
+      padding: 0 24px;
+      background: #12372A;
+      color: #ffffff !important;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(18, 55, 42, 0.15);
+      transition: all 0.25s ease;
+    }
+
+    .nav-cta:hover {
+      background: #0b221a;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(18, 55, 42, 0.25);
+    }
 
     .menu-button {
       display: none;
-      border: 0;
-      background: var(--green);
-      color: white;
+      border: 1px solid #E5E7EB;
+      background: #ffffff;
+      color: #374151;
       border-radius: 10px;
-      padding: .65rem .8rem;
-      font: inherit;
-      font-weight: 700;
+      padding: 8px 12px;
+      font-size: 14px;
+      font-weight: 600;
       cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .menu-button:hover {
+      background: #f3f4f6;
+    }
+
+    .mobile-only {
+      display: none !important;
     }
 
     .hero {
@@ -537,9 +638,38 @@
     .reveal.visible { opacity: 1; transform: none; }
 
     @media (max-width: 920px) {
-      .nav { display: none; position: absolute; top: calc(100% + .6rem); left: 0; right: 0; padding: .7rem; background: var(--white); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); }
-      .nav.open { display: grid; }
-      .nav .nav-cta { margin-left: 0; text-align: center; }
+      .nav-container { position: static; transform: none; }
+      .nav { 
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: calc(100% + 12px);
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid #E5E7EB;
+        border-radius: 16px;
+        padding: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        pointer-events: none;
+        transform: translateY(-10px);
+        gap: 8px;
+      }
+      .nav.open {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+      .nav a { width: 100%; text-align: center; padding: 12px; }
+      .nav a.active::after { display: none; }
+      .nav-cta.desktop-only { display: none !important; }
+      .nav-cta.mobile-only { display: inline-flex !important; margin-top: 8px; width: 100%; }
       .menu-button { display: block; }
       .hero-grid, .section-head, .about-grid, .experience-grid { grid-template-columns: 1fr; }
       .dashboard { max-width: 620px; width: 100%; margin: 1rem auto 0; }
@@ -576,19 +706,27 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="site-header">
+  <header class="site-header" id="site-header">
     <a class="brand" href="#home" aria-label="Pilli Keshav Rao home">
-      <span class="brand-mark">KR</span>
-      <span>Keshav Rao</span>
+      <div class="brand-mark">KR</div>
+      <div class="brand-text">
+        <span class="brand-name">Pilli Keshav Rao</span>
+        <span class="brand-title">Software Engineer</span>
+      </div>
     </a>
-    <button class="menu-button" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
-    <nav class="nav" id="nav" aria-label="Main navigation">
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#experience">Experience</a>
-      <a class="nav-cta" href="#contact">Let's talk</a>
-    </nav>
+    <div class="nav-container">
+      <nav class="nav" id="nav" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a class="nav-cta mobile-only" href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="header-right">
+      <a class="nav-cta desktop-only" href="#contact">Contact</a>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+    </div>
   </header>
 
   <main id="main">
@@ -901,6 +1039,15 @@
     }));
 
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    const siteHeader = document.querySelector('.site-header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        siteHeader.classList.add('scrolled');
+      } else {
+        siteHeader.classList.remove('scrolled');
+      }
+    });
   </script>
 </body>
 </html>
